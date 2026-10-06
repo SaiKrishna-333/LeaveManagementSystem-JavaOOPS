@@ -1,0 +1,22 @@
+digraph Flow {
+  graph [rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.35, ranksep=0.55];
+  node [shape=box, style="rounded,filled", fillcolor="#eef5ff", color="#245a9b", fontname="Helvetica", fontsize=12, margin="0.18,0.12"];
+  edge [color="#245a9b", penwidth=1.5, arrowsize=0.75, fontname="Helvetica", fontsize=10];
+  start [shape=oval, fillcolor="#e8f6ee", label="Start\napplyLeave(days, reason)"];
+  d1 [shape=diamond, fillcolor="#fff9e8", label="days > 0?"];
+  bad1 [fillcolor="#fff0f0", color="#a53a3a", label="Throw\nInvalidLeaveRequestException"];
+  d2 [shape=diamond, fillcolor="#fff9e8", label="days <= max for role?"];
+  bad2 [fillcolor="#fff0f0", color="#a53a3a", label="Throw\nInvalidLeaveRequestException"];
+  d3 [shape=diamond, fillcolor="#fff9e8", label="days <= balance?"];
+  bad3 [fillcolor="#fff0f0", color="#a53a3a", label="Throw\nInsufficientLeaveBalanceException"];
+  update [label="Deduct balance\nCreate APPROVED LeaveRequest\nStore request"];
+  end [shape=oval, fillcolor="#e8f6ee", label="Return request"];
+  start -> d1;
+  d1 -> d2 [label="Yes"];
+  d1 -> bad1 [label="No"];
+  d2 -> d3 [label="Yes"];
+  d2 -> bad2 [label="No"];
+  d3 -> update [label="Yes"];
+  d3 -> bad3 [label="No"];
+  update -> end;
+}

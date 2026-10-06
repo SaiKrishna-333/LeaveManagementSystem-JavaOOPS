@@ -1,0 +1,8 @@
+out/
+*.class
+*.aux
+*.log
+*.out
+.DS_Store
+.idea/
+.vscode/

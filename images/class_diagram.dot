@@ -1,0 +1,65 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.45, ranksep=0.55, splines=ortho, fontname="Helvetica"];
+  node [shape=plain, fontname="Helvetica"];
+  edge [color="#245a9b", penwidth=1.6, arrowsize=0.8];
+
+  policy [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#eaf3ff">
+      <TR><TD><B>&lt;&lt;interface&gt;&gt;<BR/>LeavePolicy</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ getAnnualEntitlement() : int<BR/>+ getMaxDaysPerRequest() : int</TD></TR>
+    </TABLE>>];
+
+  employee [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#f7fbff">
+      <TR><TD><B>&lt;&lt;abstract&gt;&gt;<BR/>Employee</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- employeeId : String<BR/>- name : String<BR/>- department : String<BR/>- annualEntitlement : int<BR/>- leaveBalance : int<BR/>- requests : List&lt;LeaveRequest&gt;</TD></TR>
+      <TR><TD ALIGN="LEFT">+ applyLeave(int)<BR/>+ applyLeave(int, String)<BR/>+ cancelLeave(int)<BR/>+ checkLeaveBalance() : int<BR/>+ displayDetails()<BR/># validateRequest(int)<BR/>+ getRole() : String</TD></TR>
+    </TABLE>>];
+
+  request [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#fff9e8">
+      <TR><TD><B>LeaveRequest</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- requestId : int<BR/>- days : int<BR/>- reason : String<BR/>- status : Status</TD></TR>
+      <TR><TD ALIGN="LEFT">+ cancel()<BR/>+ getRequestId()<BR/>+ getDays()<BR/>+ getStatus()</TD></TR>
+    </TABLE>>];
+
+  ft [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#eaf3ff">
+      <TR><TD><B>FullTimeEmployee</B></TD></TR><TR><TD>24 days; max 10/request</TD></TR>
+    </TABLE>>];
+  pt [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#eaf3ff">
+      <TR><TD><B>PartTimeEmployee</B></TD></TR><TR><TD>12 days; max 5/request</TD></TR>
+    </TABLE>>];
+  intern [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#eaf3ff">
+      <TR><TD><B>Intern</B></TD></TR><TR><TD>6 days; max 2/request</TD></TR>
+    </TABLE>>];
+  manager [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#e8f6ee">
+      <TR><TD><B>Manager</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- teamSize : int<BR/>30 days; max 15/request<BR/>+ displayDetails() overridden</TD></TR>
+    </TABLE>>];
+
+  exception [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#f7efff">
+      <TR><TD><B>LeaveException</B></TD></TR><TR><TD>extends Exception</TD></TR>
+    </TABLE>>];
+  insufficient [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#fff0f0">
+      <TR><TD><B>InsufficientLeaveBalanceException</B></TD></TR>
+    </TABLE>>];
+  invalid [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#fff0f0">
+      <TR><TD><B>InvalidLeaveRequestException</B></TD></TR>
+    </TABLE>>];
+
+  policy -> employee [label="implements", style=dashed];
+  employee -> request [label="1..*", arrowhead=odiamond];
+  employee -> ft [arrowhead=empty];
+  employee -> pt [arrowhead=empty];
+  employee -> intern [arrowhead=empty];
+  ft -> manager [arrowhead=empty];
+  exception -> insufficient [arrowhead=empty];
+  exception -> invalid [arrowhead=empty];
+}
