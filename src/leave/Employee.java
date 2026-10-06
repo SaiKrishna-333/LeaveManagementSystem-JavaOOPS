@@ -22,6 +22,10 @@ public abstract class Employee implements LeavePolicy {
     @Override public int getAnnualEntitlement() { return annualEntitlement; }
     public int checkLeaveBalance() { return leaveBalance; }
 
+    public LeaveRequest applyLeave(int days) throws LeaveException {
+        return applyLeave(days, "Personal");
+    }
+
     public LeaveRequest applyLeave(int days, String reason) throws LeaveException {
         if (days <= 0) throw new InvalidLeaveRequestException("Days must be positive.");
         if (days > getMaxDaysPerRequest()) throw new InvalidLeaveRequestException("Too many days requested.");
