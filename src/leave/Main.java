@@ -5,7 +5,8 @@ public class Main {
         Employee[] staff = {
             new FullTimeEmployee("E001", "Asha", "Engineering"),
             new PartTimeEmployee("E002", "Ben", "Design"),
-            new Intern("E003", "Chloe", "Marketing")
+            new Intern("E003", "Chloe", "Marketing"),
+            new Manager("E004", "Dev", "Engineering", 8)
         };
 
         for (Employee e : staff) {
