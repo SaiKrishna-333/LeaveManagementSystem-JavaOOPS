@@ -1,6 +1,5 @@
 package leave;
 
-/** Separate class so Employee does not have to manage request details. */
 public class LeaveRequest {
     public enum Status { APPROVED, CANCELLED }
 
